@@ -62,6 +62,10 @@ npx skills add lmweblab/claude-code-parallel-sessions
 
 **Claude apps:** download [coordinating-parallel-sessions.zip](https://github.com/lmweblab/claude-code-parallel-sessions/releases/latest/download/coordinating-parallel-sessions.zip) and upload it under Customize > Skills (code execution has to be on in Settings > Capabilities). In a plain chat Claude can't edit your project files, so there it can only write log entries for you to paste.
 
+## What it runs and sends
+
+Nothing. The plugin is one skill: plain instructions that Claude reads. It has no scripts, hooks or MCP servers, fetches nothing from the internet and sends no data anywhere. All it does is have Claude write two text files in your own project folder (the change log and the rules in `CLAUDE.md`).
+
 ## Limits
 
 These are rules, not locks. Two chats editing the same file within the same few seconds can still collide; re-reading and small targeted edits make that rare, not impossible. It also needs a Claude that can edit your project folder, such as Claude Code or the Code tab of the desktop app.
