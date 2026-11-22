@@ -1,22 +1,22 @@
 # Change log — shared by every session
 
 Each session adds an entry **at the top** (just under the line below) when it finishes a change.
-Before touching anything, read at least the newest entries. Rules: the project instructions (`CLAUDE.md`).
+Before each change, read at least the newest entries. Rules: the project instructions (`CLAUDE.md`), in this same folder.
 
 Entry format:
 
 ```
 ## YYYY-MM-DD HH:MM — short title
-- Session: the chat's title, or its topic if it has none (products, design, blog…)
+- Session: the chat's topic (products, design, blog…): a chat can't see its own title
 - Version: the new version (or "none")
-- Files: paths from the project folder ("new" for new files, "deleted" for removed ones), including the file that holds the version
-- What changes: 1-2 lines, in plain words
+- Files: paths from the project folder, separated by commas, with (new) or (deleted) after a path when it applies, including the file(s) that hold the version; no other notes on this line
+- What changes: 1-2 lines, in plain words. If it breaks when only some of its files are online, say so (e.g. "style.css hides the button until main.js shows it")
 - After upload: nothing / what must be done on the server, in order (e.g. "open setup.php once as admin, then delete it from the server", "add the new category in the live database")
-- Uploaded: no
+- Uploaded: <status>
 ```
 
-When the user confirms the upload, change `Uploaded: no` to `Uploaded: yes (date)`, only on the entries in the list they uploaded.
-An entry that touches only files that never get uploaded says `Uploaded: not needed`.
+Take the date and time from the computer clock (`date`), not from memory.
+Status: `no` for a new entry; `yes (YYYY-MM-DD)` once the user says all its files are uploaded; `partly (YYYY-MM-DD), still to upload: <files>` if only some went up; `local only` if none of its files ever get uploaded.
 Never delete entries, and don't edit other sessions' entries except their `Uploaded` line.
 
 ---
@@ -24,7 +24,7 @@ Never delete entries, and don't edit other sessions' entries except their `Uploa
 ## YYYY-MM-DD HH:MM — Starting point: one full upload
 - Session: setup
 - Version: the new version (raised so browsers reload everything)
-- Files: every file that gets uploaded (list them all), i.e. the whole site except the never-upload list
-- What changes: nothing new. Before today nobody recorded changes, so it is unknown what the server has. Uploading everything once puts the server and this log in step.
+- Files: everything that gets uploaded, i.e. the whole site except the never-upload list (list single files only if there are few; otherwise name the folders and what is left out)
+- What changes: nothing new. Before today nobody recorded changes, so it is unknown what the server has. Uploading everything once makes the server match this folder.
 - After upload: nothing
 - Uploaded: no

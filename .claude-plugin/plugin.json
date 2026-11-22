@@ -1,18 +1,19 @@
 {
   "name": "coordinating-parallel-sessions",
-  "version": "1.0.0",
-  "description": "Keeps several Claude chats on the same project from overwriting each other's work, with a shared change log that also tracks what is already uploaded to the server.",
+  "version": "1.1.0",
+  "description": "Stops parallel Claude sessions on the same project from overwriting each other's work, with a shared change log that also tracks what is already uploaded to the server. No git needed.",
   "author": {
     "name": "lmweblab",
     "url": "https://github.com/lmweblab"
   },
-  "homepage": "https://github.com/lmweblab/coordinating-parallel-sessions",
-  "repository": "https://github.com/lmweblab/coordinating-parallel-sessions",
+  "homepage": "https://github.com/lmweblab/claude-code-parallel-sessions",
+  "repository": "https://github.com/lmweblab/claude-code-parallel-sessions",
   "license": "MIT",
   "keywords": [
     "parallel sessions",
-    "multiple chats",
+    "multiple sessions",
     "change log",
+    "CLAUDE.md",
     "deploy",
     "ftp",
     "shared hosting",

@@ -1,17 +1,17 @@
 {
-  "name": "parallel-sessions",
+  "name": "lmweblab",
   "owner": {
     "name": "lmweblab",
     "url": "https://github.com/lmweblab"
   },
   "metadata": {
-    "description": "Coordinate several Claude chats working on the same project at the same time."
+    "description": "Claude Code plugins by lmweblab."
   },
   "plugins": [
     {
       "name": "coordinating-parallel-sessions",
       "source": "./",
-      "description": "Keeps several Claude chats on the same project from overwriting each other's work, with a shared change log that also tracks what is already uploaded to the server.",
+      "description": "Stops parallel Claude sessions on the same project from overwriting each other's work, with a shared change log that also tracks what is already uploaded to the server. No git needed.",
       "category": "productivity"
     }
   ]

@@ -1,24 +1,31 @@
-# Coordinating parallel sessions
+# Parallel Claude sessions on one project, without overwriting each other's work
 
-A Claude skill for anyone who keeps several Claude chats open on the same project at once.
+When two or more Claude Code sessions (or desktop chats) work in the same project folder, one quietly overwrites another's changes, and nobody knows what is already live on the server. This skill fixes that with two plain text files every session follows: a shared change log that also tracks what has been uploaded, and a short block of rules in `CLAUDE.md`. There's no git, no hooks and no scripts, so it works with FTP and shared hosting too.
 
-**Without it**, one chat quietly overwrites another chat's work, and nobody knows what is already on the server.
-**With it**, Claude sets up two plain text files that every session follows: a shared change log and a short block of rules in `CLAUDE.md`.
+It was made for site owners who aren't programmers and upload by FTP. Developers can use it next to git, mostly for knowing what's deployed.
 
-No git, hooks or scripts needed. It was made for owners who are not programmers and upload their site by FTP, and it works just as well for developers.
+## What a log entry looks like
+
+```
+## 2026-03-14 16:20 — Contact form: phone number field
+- Session: contact form
+- Version: 2.3.8
+- Files: contact.php, js/form.js, inc/version.php
+- What changes: the contact form asks for a phone number (optional)
+- After upload: nothing
+- Uploaded: no
+```
+
+Every session reads the newest entries before it touches anything, re-reads a file right before editing it, and adds its own entry when it's done. The log is written in your language, field names included, and entries are never deleted, so it doubles as the history of who changed what and why.
 
 ## What it sets up
 
-- **A change log** (`CHANGES.md`, written in your language). One entry per change: which chat made it, the new version, the files, what changes, what to do after uploading, and `Uploaded: no / yes (date)`. Entries are never deleted, so it is also the history of who changed what, and why.
-- **Rules for every session**, in `CLAUDE.md`:
-  - read the log before touching anything;
-  - re-read a file right before editing it;
-  - never copy a test copy or backup back over the current file;
-  - raise the version after every change and log it.
-- **A starting point**: the first entry lists the whole site as not uploaded, so the server and the log start out equal after one full upload.
-- **Two phrases** that work in any chat:
-  - *"What do I have to upload?"* gives one list built from every chat's pending changes, each file once, plus the steps to do after the upload.
-  - *"I uploaded it"* marks those entries as uploaded.
+- The change log (`CHANGES.md`, or `MODIFICHE.md` in Italian, and so on).
+- The rules block in `CLAUDE.md`: read the log first, re-read before editing, change files only with small targeted edits (never copy a test copy or backup back over the current file), raise the version after every change, log it.
+- A starting entry that lists the whole site as not uploaded, so one full upload puts the server and the log in step.
+- A never-upload list: databases, backups, `.env` and other secrets, `node_modules/`, `.DS_Store`, the log itself.
+
+Then two phrases work in any chat. *"What do I have to upload?"* gives one list built from every chat's pending changes, each file once, plus whatever has to happen on the server afterwards (open a setup page, clear the cache). *"I uploaded it"* marks those entries as uploaded; if only part of the list went up, the entries say which files are still missing.
 
 ## How to use it
 
@@ -26,28 +33,46 @@ Open a session on your project and say something like:
 
 > I keep several chats open on this project at the same time. Set things up so they stop overwriting each other and I always know what's uploaded.
 
-Claude finds your version number and the files that must never be uploaded (databases, backups, secrets), creates the two files, and tells you what to do with the chats that are already open.
+Claude asks how you upload, finds your version number and the files that must never go online, creates the two files and tells you what to do with the chats that are already open.
 
 ## Install
 
-**Claude Code:** add this repository as a plugin marketplace, then install the plugin:
+**Claude Code**, inside a session:
 
 ```
-/plugin marketplace add lmweblab/coordinating-parallel-sessions
-/plugin install coordinating-parallel-sessions@parallel-sessions
+/plugin marketplace add lmweblab/claude-code-parallel-sessions
+/plugin install coordinating-parallel-sessions@lmweblab
 ```
 
-Or copy `skills/coordinating-parallel-sessions/` into `~/.claude/skills/`.
+`lmweblab` after the `@` is the name of the marketplace this repository provides. From a terminal, the same thing in one line:
 
-**Claude apps:** download `coordinating-parallel-sessions.zip` from the Releases page and upload it as a custom skill in Settings.
+```bash
+claude plugin install coordinating-parallel-sessions --marketplace lmweblab/claude-code-parallel-sessions
+```
 
-The log only works where Claude can edit your project files, as in Claude Code. A plain web chat can't keep it.
+To update later: `claude plugin marketplace update lmweblab`, then `claude plugin update coordinating-parallel-sessions@lmweblab`, then restart Claude Code.
+
+**Other agents** that read skills (via [skills.sh](https://skills.sh)):
+
+```bash
+npx skills add lmweblab/claude-code-parallel-sessions
+```
+
+**By hand:** copy [`skills/coordinating-parallel-sessions/`](skills/coordinating-parallel-sessions/SKILL.md) into `~/.claude/skills/`. Pick one method only; two copies of the same skill just confuse things.
+
+**Claude apps:** download [coordinating-parallel-sessions.zip](https://github.com/lmweblab/claude-code-parallel-sessions/releases/latest/download/coordinating-parallel-sessions.zip) and upload it under Customize > Skills (code execution has to be on in Settings > Capabilities). In a plain chat Claude can't edit your project files, so there it can only write log entries for you to paste.
+
+## Limits
+
+These are rules, not locks. Two chats editing the same file within the same few seconds can still collide; re-reading and small targeted edits make that rare, not impossible. It also needs a Claude that can edit your project folder, such as Claude Code or the Code tab of the desktop app.
 
 ## Where it comes from
 
-It comes from months of building and maintaining seven internal web apps for a small company, with three or four Claude chats open at the same time. The shared log there passed 120 entries without one chat losing another chat's work.
+It grew out of months of work on seven internal web apps for a small company, with three or four Claude chats open at once and everything uploaded by FTP. The shared log there now has more than 100 entries.
 
-The skill was written test-first. Sample sessions ran on a test site without the skill, then with it. Without the skill, a session asked to "fix this" built hooks, scripts and folder-ownership rules. It also deleted history after each upload and had no place for after-upload steps. With the skill, sessions set up the two files, re-applied changes instead of copying old files back, and built the upload list from every chat's pending entries.
+Before release, test sessions ran on sample sites with and without the skill. Without it, a session asked to fix the problem built hooks, scripts and folder-ownership rules, and deleted the history after each upload. Later rounds ran it end to end on a WordPress child theme, which is where the handling of half-finished uploads and secrets already on the server came from.
+
+The full instructions Claude follows are in [SKILL.md](skills/coordinating-parallel-sessions/SKILL.md).
 
 ## License
 
@@ -57,12 +82,10 @@ MIT
 
 ## In italiano
 
-Una skill per chi tiene aperte più chat di Claude sullo stesso progetto nello stesso momento.
+Una skill per chi tiene aperte più chat di Claude sullo stesso progetto nello stesso momento. Senza, una chat cancella il lavoro di un'altra senza che nessuno se ne accorga, e non si sa più cosa è già sul server.
 
-Claude crea due file di testo:
-- un **registro delle modifiche**, nella tua lingua;
-- le **regole comuni** in `CLAUDE.md`.
-
-Così le chat non si cancellano più il lavoro a vicenda e sai sempre cosa è già sul server. Funzionano due frasi in qualsiasi chat: *"Cosa devo caricare?"* e *"Ho caricato"*.
+Claude crea due file di testo: un registro delle modifiche nella tua lingua (`MODIFICHE.md`) e le regole comuni in `CLAUDE.md`. Ogni chat legge il registro prima di toccare qualcosa e ci scrive cosa ha cambiato. Da lì funzionano due frasi in qualsiasi chat: *"Cosa devo caricare?"*, che ti dà un'unica lista di file con quello che c'è da fare dopo, e *"Ho caricato"*.
 
 Per iniziare, apri una chat sul progetto e scrivi: *"Ho più chat aperte su questo progetto: sistemale in modo che non si cancellino il lavoro a vicenda e che io sappia sempre cosa ho caricato."*
+
+Per installarla in Claude Code, scrivi in una sessione `/plugin marketplace add lmweblab/claude-code-parallel-sessions` e poi `/plugin install coordinating-parallel-sessions@lmweblab`.
