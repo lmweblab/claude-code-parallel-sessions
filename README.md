@@ -72,7 +72,7 @@ These are rules, not locks. Two chats editing the same file within the same few 
 
 ## Where it comes from
 
-It grew out of months of work on seven internal web apps for a small company, with three or four Claude chats open at once and everything uploaded by FTP. The shared log there now has more than 100 entries.
+It grew out of work on seven internal web apps for a small company, with several Claude chats open at once and everything uploaded by hand to shared hosting. The shared log there collected more than 100 entries in its first month.
 
 Before release, test sessions ran on sample sites with and without the skill. Without it, a session asked to fix the problem built hooks, scripts and folder-ownership rules, and deleted the history after each upload. Later rounds ran it end to end on a WordPress child theme, which is where the handling of half-finished uploads and secrets already on the server came from.
 
