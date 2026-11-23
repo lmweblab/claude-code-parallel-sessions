@@ -46,7 +46,7 @@ That is the whole setup: two files. Hooks, scripts, hash ledgers, locks and "whi
 
 ## Every change
 
-The rules block makes each session do this: read the newest log entries → re-read the file right before editing → apply only its own change, with a targeted edit → raise the version → add an entry at the top with `Uploaded: no`.
+The rules block makes each session do this: read the newest log entries → re-read the file right before editing → stop and ask if the lines it has to change are no longer as it last read them → apply only its own change, with a targeted edit → raise the version → add an entry at the top with `Uploaded: no`.
 
 ## "What do I have to upload?"
 
@@ -67,6 +67,7 @@ If identical files live in several apps (a login page, a shared stylesheet), mak
 | Mistake | Fix |
 |---|---|
 | Copying a tested file back from a test copy or backup, or rewriting a whole file | Re-read the current file and re-apply just your change with a targeted edit: another session may have edited it after you made the copy |
+| Changing lines that another session changed after you last read them, because the user is in a hurry or asked for it before that change | Tell the user what is there now and ask which version to keep |
 | Skipping the version bump because the change is tiny | Bump every time an uploaded file changes, and list the version file in the entry: it has to be uploaded too |
 | Deleting log entries once they are uploaded | Keep them: the log is also the history of who changed what, and why |
 | Building tooling (hooks, scripts, ownership zones) instead of the two files | Rules the owner can read are the rules that survive |

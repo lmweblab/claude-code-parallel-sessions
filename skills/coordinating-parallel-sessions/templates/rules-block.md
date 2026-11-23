@@ -6,7 +6,9 @@ Several sessions edit this project at the same time and cannot see each other. T
 
 **While changing:**
 - Re-read a file right before editing it, even if you read it earlier: another session may have changed it.
-- Change existing files only with small targeted edits. Never rewrite or replace a whole file: not with a whole-file write, `cp`, `mv`, `cat >` or `sed -i`, and not from a test copy, a backup, an old folder or memory. Files made by a build step are the exception.
+- If the lines the user asked you to change are no longer as you last read them, another session changed them in the meantime. Don't change them yet: tell the user what is there now (the log may say which session did it and why) and ask which version to keep. If only other parts of the file changed, keep them and go on with your change.
+- If your edit tool refuses because the file changed, your copy is old: re-read the file and start from what is there now. Never get round the refusal with a shell command or a script.
+- Change existing files only with small targeted edits. Never rewrite or replace a whole file: not with a whole-file write, `cp`, `mv`, `cat >`, `sed -i` or a script, and not from a test copy, a backup, an old folder or memory. Files made by a build step are the exception.
 - Do not undo or tidy changes you didn't make, even if they look unfinished: they are another session's work in progress. If something looks broken, tell the user.
 - Try risky changes on a copy outside the project, never on real data.
 

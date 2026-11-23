@@ -1,6 +1,6 @@
 # Parallel Claude sessions on one project, without overwriting each other's work
 
-When two or more Claude Code sessions (or desktop chats) work in the same project folder, one quietly overwrites another's changes, and nobody knows what is already live on the server. This skill fixes that with two plain text files every session follows: a shared change log that also tracks what has been uploaded, and a short block of rules in `CLAUDE.md`. There's no git, no hooks and no scripts, so it works with FTP and shared hosting too.
+When two or more Claude Code sessions (or desktop chats) work in the same project folder, one can quietly overwrite another's changes, and nobody knows what is already live on the server. This skill fixes that with two plain text files every session follows: a shared change log that also tracks what has been uploaded, and a short block of rules in `CLAUDE.md`. There's no git, no hooks and no scripts, so it works with FTP and shared hosting too.
 
 It was made for site owners who aren't programmers and upload by FTP. Developers can use it next to git, mostly for knowing what's deployed.
 
@@ -21,7 +21,7 @@ Every session reads the newest entries before it touches anything, re-reads a fi
 ## What it sets up
 
 - The change log (`CHANGES.md`, or `MODIFICHE.md` in Italian, and so on).
-- The rules block in `CLAUDE.md`: read the log first, re-read before editing, change files only with small targeted edits (never copy a test copy or backup back over the current file), raise the version after every change, log it.
+- The rules block in `CLAUDE.md`: read the log first, re-read before editing, change files only with small targeted edits (never copy a test copy or backup back over the current file), raise the version after every change, log it. If another session changed the same lines in the meantime, stop and ask which version to keep.
 - A starting entry that lists the whole site as not uploaded, so one full upload puts the server and the log in step.
 - A never-upload list: databases, backups, `.env` and other secrets, `node_modules/`, `.DS_Store`, the log itself.
 
@@ -68,7 +68,7 @@ Nothing. The plugin is one skill: plain instructions that Claude reads. It has n
 
 ## Limits
 
-These are rules, not locks. Two chats editing the same file within the same few seconds can still collide; re-reading and small targeted edits make that rare, not impossible. It also needs a Claude that can edit your project folder, such as Claude Code or the Code tab of the desktop app.
+These are rules, not locks. Two chats editing the same file within the same few seconds can still collide; re-reading and small targeted edits make that rare, not impossible. Claude Code's own Edit and Write tools already catch an out-of-date copy of a file; shell commands such as `cp` don't, so the rules forbid using them to replace files. It also needs a Claude that can edit your project folder, such as Claude Code or the Code tab of the desktop app.
 
 ## Where it comes from
 
@@ -86,9 +86,9 @@ MIT
 
 ## In italiano
 
-Una skill per chi tiene aperte più chat di Claude sullo stesso progetto nello stesso momento. Senza, una chat cancella il lavoro di un'altra senza che nessuno se ne accorga, e non si sa più cosa è già sul server.
+Una skill per chi tiene aperte più chat di Claude sullo stesso progetto nello stesso momento. Senza, una chat può cancellare il lavoro di un'altra senza che nessuno se ne accorga, e non si sa più cosa è già sul server.
 
-Claude crea due file di testo: un registro delle modifiche nella tua lingua (`MODIFICHE.md`) e le regole comuni in `CLAUDE.md`. Ogni chat legge il registro prima di toccare qualcosa e ci scrive cosa ha cambiato. Da lì funzionano due frasi in qualsiasi chat: *"Cosa devo caricare?"*, che ti dà un'unica lista di file con quello che c'è da fare dopo, e *"Ho caricato"*.
+Claude crea due file di testo: un registro delle modifiche nella tua lingua (`MODIFICHE.md`) e le regole comuni in `CLAUDE.md`. Ogni chat legge il registro prima di toccare qualcosa e ci scrive cosa ha cambiato. Se nel frattempo un'altra chat ha cambiato le stesse righe, si ferma e ti chiede quale versione tenere. Da lì funzionano due frasi in qualsiasi chat: *"Cosa devo caricare?"*, che ti dà un'unica lista di file con quello che c'è da fare dopo, e *"Ho caricato"*.
 
 Per iniziare, apri una chat sul progetto e scrivi: *"Ho più chat aperte su questo progetto: sistemale in modo che non si cancellino il lavoro a vicenda e che io sappia sempre cosa ho caricato."*
 
