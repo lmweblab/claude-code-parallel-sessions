@@ -1,7 +1,7 @@
 # Change log — shared by every session
 
 Each session adds an entry **at the top** (just under the line below) when it finishes a change.
-Before each change, read at least the newest entries. Rules: the project instructions (`CLAUDE.md`), in this same folder.
+Before each change, read the newest entries and search the older ones for what you are about to change. Rules: the project instructions (`CLAUDE.md`), in this same folder.
 
 Entry format:
 

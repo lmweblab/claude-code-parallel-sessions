@@ -16,16 +16,16 @@ It was made for site owners who aren't programmers and upload by FTP. Developers
 - Uploaded: no
 ```
 
-Every session reads the newest entries before it touches anything, re-reads a file right before editing it, and adds its own entry when it's done. The log is written in your language, field names included, and entries are never deleted, so it doubles as the history of who changed what and why.
+Every session reads the newest entries before it touches anything, searches the older ones for the thing it is about to change (it doesn't read the whole log each time), re-reads a file right before editing it, and adds its own entry when it's done. The log is written in your language, field names included, and entries are never deleted, so it doubles as the history of who changed what and why.
 
 ## What it sets up
 
 - The change log (`CHANGES.md`, or `MODIFICHE.md` in Italian, and so on).
-- The rules block in `CLAUDE.md`: read the log first, re-read before editing, change files only with small targeted edits (never copy a test copy or backup back over the current file), raise the version after every change, log it. If another session changed the same lines in the meantime, stop and ask which version to keep.
+- The rules block in `CLAUDE.md`: read the log first, re-read before editing, change files only with small targeted edits (never copy a test copy or backup back over the current file), raise the version after every change, log it. If another session changed the same lines in the meantime, stop and ask which version to keep. If an older entry says you wanted the opposite of what you are asking now, say so and ask first.
 - A starting entry that lists the whole site as not uploaded, so one full upload puts the server and the log in step.
 - A never-upload list: databases, backups, `.env` and other secrets, `node_modules/`, `.DS_Store`, the log itself.
 
-Then two phrases work in any chat. *"What do I have to upload?"* gives one list built from every chat's pending changes, each file once, plus whatever has to happen on the server afterwards (open a setup page, clear the cache). *"I uploaded it"* marks those entries as uploaded; if only part of the list went up, the entries say which files are still missing.
+After each change, the chat tells you how many changes are waiting to be uploaded, counting every chat's. Then two phrases work in any chat. *"What do I have to upload?"* gives one list built from every chat's pending changes, each file once, plus whatever has to happen on the server afterwards (open a setup page, clear the cache). *"I uploaded it"* marks those entries as uploaded; if only part of the list went up, the entries say which files are still missing.
 
 ## How to use it
 
@@ -88,7 +88,7 @@ MIT
 
 Una skill per chi tiene aperte più chat di Claude sullo stesso progetto nello stesso momento. Senza, una chat può cancellare il lavoro di un'altra senza che nessuno se ne accorga, e non si sa più cosa è già sul server.
 
-Claude crea due file di testo: un registro delle modifiche nella tua lingua (`MODIFICHE.md`) e le regole comuni in `CLAUDE.md`. Ogni chat legge il registro prima di toccare qualcosa e ci scrive cosa ha cambiato. Se nel frattempo un'altra chat ha cambiato le stesse righe, si ferma e ti chiede quale versione tenere. Da lì funzionano due frasi in qualsiasi chat: *"Cosa devo caricare?"*, che ti dà un'unica lista di file con quello che c'è da fare dopo, e *"Ho caricato"*.
+Claude crea due file di testo: un registro delle modifiche nella tua lingua (`MODIFICHE.md`) e le regole comuni in `CLAUDE.md`. Ogni chat legge il registro prima di toccare qualcosa e ci scrive cosa ha cambiato. Se nel frattempo un'altra chat ha cambiato le stesse righe, si ferma e ti chiede quale versione tenere; fa lo stesso se il registro dice che in passato avevi chiesto il contrario. Dopo ogni modifica ti dice quante modifiche, di tutte le chat, aspettano di essere caricate. Da lì funzionano due frasi in qualsiasi chat: *"Cosa devo caricare?"*, che ti dà un'unica lista di file con quello che c'è da fare dopo, e *"Ho caricato"*.
 
 Per iniziare, apri una chat sul progetto e scrivi: *"Ho più chat aperte su questo progetto: sistemale in modo che non si cancellino il lavoro a vicenda e che io sappia sempre cosa ho caricato."*
 

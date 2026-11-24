@@ -2,7 +2,7 @@
 
 Several sessions edit this project at the same time and cannot see each other. They coordinate only through the log `{{LOG_FILE}}`, in the same folder as this file. {{PATHS_START_FROM}}
 
-**Before each change**, not only when the chat starts: read the newest log entries (newest at the top). They show what other sessions changed and what is not uploaded yet.
+**Before each change**, not only when the chat starts: read the newest log entries (newest at the top), then search the rest of the log for what you are about to change (its name, such as "contact form", and its file) and read the matching entries about it. Don't read the whole log each time. The entries show what other sessions changed, why, and what is not uploaded yet. If one says the user wanted the opposite of the new request, tell the user what it says and when, and ask before changing.
 
 **While changing:**
 - Re-read a file right before editing it, even if you read it earlier: another session may have changed it.
@@ -15,10 +15,11 @@ Several sessions edit this project at the same time and cannot see each other. T
 **When a request is finished:**
 1. If it changed files that get uploaded, raise the version in {{VERSION_LOCATION}} (every place, always the same number), even for a tiny change: re-read the file(s) and add one to the last number (1.4.2 → 1.4.3). If that number is already in the log, take the next one.
 2. Add an entry at the top of the log, in the format written there, with `Uploaded: no` (or `Uploaded: local only` if none of its files get uploaded). While you are still adjusting the same request and your entry still says `Uploaded: no`, update it instead of adding one or raising the version again. Once it is marked yes or partly, the adjustment is a new change.
+3. If you added or updated an entry and the user didn't ask what to upload, say only this about uploading, at the end of your message: "Only on this computer for now. Changes waiting to be uploaded: N. Ask me 'What do I have to upload?' for the full list." N is every entry marked `Uploaded: no` or `Uploaded: partly` in the whole log: search for them, don't count only the newest.
 
 **Never upload:** {{NEVER_UPLOAD}}. If you add a file of this kind, add it here.
 
-**When the user asks what to upload:** take every entry marked `Uploaded: no`, plus the files still missing on entries marked `Uploaded: partly`, from any session, oldest first. List each file once, with the full server folder next to it (files marked "deleted" must be deleted on the server), then the "After upload" steps in order. Say:
+**When the user asks what to upload:** search the whole log and take every entry marked `Uploaded: no`, plus the files still missing on entries marked `Uploaded: partly`, from any session, oldest first. List each file once, with the full server folder next to it (files marked "deleted" must be deleted on the server), then the "After upload" steps in order. Say:
 - which other sessions' changes go online with it;
 - that each file goes into its matching folder on the server: {{SERVER_FOLDER}} plus the file's own subfolders; that the whole list goes up together; and to upload these files only, never the whole folder;
 - that chats still open may have unfinished changes in these files;

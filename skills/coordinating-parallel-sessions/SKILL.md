@@ -46,11 +46,11 @@ That is the whole setup: two files. Hooks, scripts, hash ledgers, locks and "whi
 
 ## Every change
 
-The rules block makes each session do this: read the newest log entries → re-read the file right before editing → stop and ask if the lines it has to change are no longer as it last read them → apply only its own change, with a targeted edit → raise the version → add an entry at the top with `Uploaded: no`.
+The rules block makes each session do this: read the newest log entries → search the older ones for what it is about to change, and ask first if the user wanted the opposite → re-read the file right before editing → stop and ask if the lines it has to change are no longer as it last read them → apply only its own change, with a targeted edit → raise the version → add an entry at the top with `Uploaded: no` → say how many changes are waiting to be uploaded, from every session. The list of files comes only when the user asks for it, because it has to cover the whole log.
 
 ## "What do I have to upload?"
 
-Take every entry with `Uploaded: no`, plus the files still missing on entries marked `Uploaded: partly`, oldest first. The upload list is the union of their files (a file changed by two sessions goes up once and carries both changes), minus the never-upload list. Then:
+Search the whole log and take every entry with `Uploaded: no`, plus the files still missing on entries marked `Uploaded: partly`, oldest first. The upload list is the union of their files (a file changed by two sessions goes up once and carries both changes), minus the never-upload list. Then:
 - Say plainly which other sessions' changes go online with this upload.
 - Say that each file goes into its matching folder on the server (write the full server folder next to each file), that the whole list goes up together, and that they should upload these files only, never the whole folder.
 - Add, in order, whatever must happen after the upload: a migration page to open (and whether to delete it afterwards), a change to make in the live database, A before B, clearing the cache.
@@ -72,6 +72,7 @@ If identical files live in several apps (a login page, a shared stylesheet), mak
 | Deleting log entries once they are uploaded | Keep them: the log is also the history of who changed what, and why |
 | Building tooling (hooks, scripts, ownership zones) instead of the two files | Rules the owner can read are the rules that survive |
 | Undoing or "tidying" changes this session didn't make, or editing another session's entry | Leave them. Record fixes (such as a bump someone forgot) in your own entry. Tell the user if something looks broken |
-| Listing only this session's files when asked what to upload | List every entry still marked `Uploaded: no` or `partly` |
+| Telling the user to upload only this session's files | If they asked what to upload, list every entry still marked `Uploaded: no` or `partly`. If they didn't, say how many changes are waiting, without file names |
+| Reading the whole log before every change, or only its newest entries | Read the newest, then search the rest for what you are about to change |
 | Marking a whole entry uploaded when only some of its files went up | `Uploaded: partly (date), still to upload: <files>` |
 | Starting with an empty log, so later chats answer "nothing to upload" | The starting entry lists the whole site as not uploaded |
