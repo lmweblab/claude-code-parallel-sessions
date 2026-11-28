@@ -1,7 +1,7 @@
 {
   "name": "coordinating-parallel-sessions",
   "displayName": "Parallel Sessions Log",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Stops parallel Claude sessions on the same project from overwriting each other's work, with a shared change log that also tracks what is already uploaded to the server. No git needed.",
   "author": {
     "name": "lmweblab",
